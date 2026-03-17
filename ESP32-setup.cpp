@@ -21,15 +21,15 @@ byte teclas[FILAS][COLUMNAS] = {
 
 // Pines de la matriz
 byte pinesFilas[FILAS] = {36, 39, 34, 35, 32};
-byte pinesColumnas[COLUMNAS] = {13, 14, 16, 17, 18, 19, 21, 22, 23, 25, 26, 27, 33, 4, 2, 5, 15, 0};
+byte pinesColumnas[COLUMNAS] = {13, 14, 16, 17, 18, 19, 21, 22, 23, 27,   33, 4, 2, 5, 15, 0, 12, 8};
 /* ============================================================================================================================ */
 
 
 
 
 /* =============================================  CONFIGURACIÓN DE BATERÍA Y LED =============================================== */
-#define PIN_LED_ROJO     13  // GPIO 13 para rojo
-#define PIN_LED_VERDE     14  // GPIO 14 para verde
+#define PIN_LED_ROJO     25  // GPIO 25 para rojo
+#define PIN_LED_VERDE     26  // GPIO 25 para verde
 #define PIN_BATERIA       34  // GPIO 34 para leer voltaje (ADC1_CH6)
 
 // Parámetros de la batería Li-Po / Li-ion 3.7V 2400mAh
