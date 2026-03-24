@@ -1,6 +1,6 @@
 /**
- * Teclado Mecanico Custom con ESP32
- * Autor: Proyecto personal
+ * Teclado Mecanico Custom basado en el teclado de Commodore Vic20 programado con ESP32
+ * Autor: NACH Corp
  * Descripción: Teclado Bluetooth con matriz 5x18, monitor de batería y LED indicador
  */
 
