@@ -1,22 +1,58 @@
-// ========== CONFIGURACIÓN DE MATRIZ ==========
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#include <Keypad.h>
+#include <BleKeyboard.h>
+
+
+// ========== DEFINICIONES GENERALES ==========
+#define KEY_FN 0xF0  // Tecla FN (fuera del rango HID estandar)
+
+// ========== CONFIGURACION DE MATRIZ ==========
 const byte FILAS = 5;
 const byte COLUMNAS = 18;
 
-// Pines para FILAS (entradas) 
+// Pines para FILAS (INPUTS)
 // GPIO0 necesita resistencia pull-up EXTERNA de 10kΩ a 3.3V
-byte pinesFilas[FILAS] = {36, 39, 34, 35, 0};  // 0 con pull-up externo
+extern byte pinesFilas[FILAS];
 
-// Pines para COLUMNAS (salidas) - 18 pines
-byte pinesColumnas[COLUMNAS] = {
-  13, 14, 16, 17, 18, 19, 21, 22, 23,  // Pines 100% seguros
-  25, 26, 27, 32, 33,                   // Más pines seguros
-  4, 2, 5, 15                           // Pines de arranque (funcionan en columnas)
-};
+// Pines para COLUMNAS (OUTPUTS) - 18 pines
+extern byte pinesColumnas[COLUMNAS];
 
-// ========== CONFIGURACIÓN DE BATERÍA Y LED ==========
-#define PIN_LED_ROJO     25  // GPIO 25 para rojo (no usado en matriz)
-#define PIN_LED_VERDE     26  // GPIO 26 para verde (no usado en matriz)
-#define PIN_BATERIA       34  // GPIO 34 para batería (solo lectura)
+// ========== CONFIGURACION DE BATERIA Y LED ==========
+#define PIN_LED_ROJO     25  // GPIO 25 LED rojo
+#define PIN_LED_VERDE     26  // GPIO 26 LED verde
+#define PIN_BATERIA       34  // GPIO 34 para lectura de voltaje (ADC1_CH6)
+
+// Parametros de la bateria Li-Po 3.7V 2400mAh
+const float VOLTAJE_MAX_BATERIA = 4.2;
+const float VOLTAJE_NOMINAL = 3.7;
+const float VOLTAJE_MIN_SEGURO = 3.0;
+const float VOLTAJE_BAJO = 3.5;
+const float VOLTAJE_MIN_BATERIA = 3.3;
+const float VOLTAJE_CRITICO = 3.1;
+const float VOLTAJE_PELIGRO = 3.05;
+const float VOLTAJE_USB_CONECTADO = 4.05;
+
+// Factor del divisor de tension (R1=100kΩ, R2=27kΩ)
+const float DIVISOR_FACTOR = 4.7;
+
+// Para calibración ADC
+const int NUM_MUESTRAS = 64;
+
+// ========== TIEMPOS Y CONFIGURACIONES ==========
+const unsigned long TIEMPO_FN = 300;                    // ms para doble pulsacion FN
+const unsigned long INTERVALO_BATERIA = 5000;           // Leer bateria cada 5 segundos
+const unsigned long INTERVALO_PARPADEO_NORMAL = 500;    // 500ms para bateria baja
+const unsigned long INTERVALO_PARPADEO_CRITICO = 200;   // 200ms para bateria crítica
+const unsigned long INTERVALO_PARPADEO_PELIGRO = 100;   // 100ms para peligro extremo
+
+// ========== OBJETOS GLOBALES ==========
+extern BleKeyboard bleKeyboard;
+extern Keypad teclado;
+
+#endif
+
 
 
 /* 
