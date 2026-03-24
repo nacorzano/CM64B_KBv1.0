@@ -1,5 +1,5 @@
-#ifndef MATRIZ_H
-#define MATRIZ_H
+#ifndef MATRIX_H
+#define MATRIX_H
 
 #include "config.h"
 
@@ -15,9 +15,8 @@ byte pinesColumnas[COLUMNAS] = {
 };
 
 // ========== MAPA DE TECLAS ==========
-// Basado en keyboard-layout-editor.com
 const byte teclas[FILAS][COLUMNAS] PROGMEM = {
-  // FILA 0 (superior) - P1, ESC, números, símbolos, Backspace, P5, P6, P7
+  // FILA 0 (superior) - P1, ESC, numeros, simbolos, Backspace, P5, P6, P7
   {KEY_F13, KEY_ESC, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', KEY_BACKSPACE, KEY_F17, KEY_F18, KEY_F19},
   
   // FILA 1 - P2, Tab, QWERTYUIOP, [ ], \, DEL, PG UP, PG DWN
