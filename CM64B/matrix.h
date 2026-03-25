@@ -4,14 +4,11 @@
 #include "config.h"
 
 // ========== DEFINICION DE PINES ==========
-// Pines para FILAS (INPUT)
-byte pinesFilas[FILAS] = {36, 39, 34, 35, 0};
+byte pinesFilas[FILAS] = {12, 14, 27, 32, 33};
 
-// Pines para COLUMNAS (OUTPUT) - 18 pines
 byte pinesColumnas[COLUMNAS] = {
-  13, 14, 16, 17, 18, 19, 21, 22, 23,  
-  25, 26, 27, 32, 33,                   
-  4, 2, 5, 15                           
+  13, 16, 17, 18, 19, 21, 22, 23, 25,
+  26, 4, 2, 5, 15, 0, 34, 35, 36
 };
 
 // ========== MAPA DE TECLAS ==========
@@ -26,11 +23,28 @@ const byte teclas[FILAS][COLUMNAS] PROGMEM = {
   {KEY_F15, KEY_CAPS_LOCK, 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', KEY_RETURN, KEY_HOME, KEY_UP_ARROW, KEY_END, 0},
   
   // FILA 3 - P4, Shift, ZXCVBNM, ,, ., /, Shift, ←, ↓, →
-  {KEY_F16, KEY_LEFT_SHIFT, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', KEY_RIGHTSHIFT, KEY_LEFT_ARROW, KEY_DOWN_ARROW, KEY_RIGHT_ARROW, 0, 0},
+  {KEY_F16, KEY_LEFT_SHIFT, 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', KEY_RIGHT_SHIFT, KEY_LEFT_ARROW, KEY_DOWN_ARROW, KEY_RIGHT_ARROW, 0, 0},
   
   // FILA 4 (inferior) - CTR, ALT, espacio (vacío), FN, ALT
   {KEY_LEFT_CTRL, KEY_LEFT_ALT, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, KEY_RIGHT_ALT, KEY_FN, 0, 0, 0}
 };
+
+// ========== DIRECCIONES MAC DE DISPOSITIVOS ==========
+uint8_t MACAddress[maxdevice][6] = {
+  {0x35, 0xAF, 0xA4, 0x07, 0x0B, 0x66},
+  {0x31, 0xAE, 0xAA, 0x47, 0x0D, 0x61},
+  {0x31, 0xAE, 0xAC, 0x42, 0x0A, 0x31}
+};
+
+// ========== FUNCIONES ==========
+void changeID(int DevNum) {
+  if (DevNum < maxdevice) {
+    EEPROM.write(0, DevNum);
+    EEPROM.commit();
+    // Reinicio suave para aplicar cambios
+    esp_restart();
+  }
+}
 
 // ========== VARIABLES DE ESTADO DEL TECLADO ==========
 extern bool fnActivo;
