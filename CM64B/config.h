@@ -5,18 +5,20 @@
 #include <BleKeyboard.h>
 #include <EEPROM.h>             //Used for storage of MAC address selection
 
+// Librerías necesarias para la función de MAC address
+#include <esp_mac.h>          // Para esp_iface_mac_addr_set()
+#include "esp_bt.h"            // Para el tipo ESP_MAC_BT
 
-//  Code to "store" devices, so that the keyboard can switch connections on the fly ////////////////////////////////////////////////////////////////////////
-//Adapted from : https://github.com/Cemu0/ESP32_USBHOST_TO_BLE_KEYBOARD/blob/main/src/USBHIDBootBLEKbd.cpp
-//Primarily stores the selected MAC address in EEPROM storage
+
+// ========== CONFIGURACIÓN DE DISPOSITIVOS MULTIPLES ==========
 const int maxdevice = 3;
-uint8_t MACAddress[maxdevice][6] = 
-{
-  {0x35, 0xAF, 0xA4, 0x07, 0x0B, 0x66},
-  {0x31, 0xAE, 0xAA, 0x47, 0x0D, 0x61},
-  {0x31, 0xAE, 0xAC, 0x42, 0x0A, 0x31}
-  
-};
+
+// Direcciones MAC de los dispositivos a conectar
+extern uint8_t MACAddress[maxdevice][6];
+
+
+
+
 
 // ========== DEFINICIONES GENERALES ==========
 #define KEY_FN 0xF0  // Tecla FN (fuera del rango HID estandar)
@@ -25,17 +27,16 @@ uint8_t MACAddress[maxdevice][6] =
 const byte FILAS = 5;
 const byte COLUMNAS = 18;
 
-// Pines para FILAS (INPUTS)
-// GPIO0 necesita resistencia pull-up EXTERNA de 10kΩ a 3.3V
+// Pines para FILAS
 extern byte pinesFilas[FILAS];
 
-// Pines para COLUMNAS (OUTPUTS) - 18 pines
+// Pines para COLUMNAS
 extern byte pinesColumnas[COLUMNAS];
 
-// ========== CONFIGURACION DE BATERIA Y LED ==========
-#define PIN_LED_ROJO     25  // GPIO 25 LED rojo
-#define PIN_LED_VERDE     26  // GPIO 26 LED verde
-#define PIN_BATERIA       34  // GPIO 34 para lectura de voltaje (ADC1_CH6)
+// LEDs
+#define PIN_LED_ROJO     20
+#define PIN_LED_VERDE     24
+#define PIN_BATERIA       34
 
 // Parametros de la bateria Li-Po 3.7V 2400mAh
 const float VOLTAJE_MAX_BATERIA = 4.2;
