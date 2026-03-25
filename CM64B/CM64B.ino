@@ -202,11 +202,40 @@ void setup() {
   //Allows the keyboard to connect to multiple devices, and "remembers" what device it was connected to
   EEPROM.begin(4);                                      //Begin EEPROM, allow us to store
   int deviceChose = EEPROM.read(0);                     //Read selected address from storage
-  esp_base_mac_addr_set(&MACAddress[deviceChose][0]);   //Set MAC address based on that stored value
-
+// Validar que el valor leído sea válido
+  if (deviceChose >= maxdevice || deviceChose < 0) {
+    deviceChose = 0;  // Valor por defecto
+    EEPROM.write(0, deviceChose);
+    EEPROM.commit();
+  }
+ /// Configurar MAC address ANTES de iniciar Bluetooth
+// Usando la API moderna para ESP32 v3.x
+esp_err_t err = esp_iface_mac_addr_set(&MACAddress[deviceChose][0], ESP_MAC_BT);
+if (err == ESP_OK) {
+    Serial.print("MAC configurada correctamente: ");
+    for (int i = 0; i < 6; i++) {
+        Serial.print(MACAddress[deviceChose][i], HEX);
+        if (i < 5) Serial.print(":");
+    }
+    Serial.println();
+} else {
+    Serial.print("Error configurando MAC: ");
+    Serial.println(err);
+}
   
   // Configuración especial para GPIO0
-  pinMode(0, INPUT_PULLUP);  // Necesita resistencia EXTERNA de 10kΩ a 3.3V
+  //pinMode(0, INPUT_PULLUP);  // Necesita resistencia EXTERNA de 10kΩ a 3.3V
+
+  // Configurar pines de fila con pull-up interno (todos lo tienen)
+  for (int i = 0; i < FILAS; i++) {
+    pinMode(pinesFilas[i], INPUT_PULLUP);
+  }
+  
+  // Configurar pines de columna como salidas
+  for (int i = 0; i < COLUMNAS; i++) {
+    pinMode(pinesColumnas[i], OUTPUT);
+    digitalWrite(pinesColumnas[i], HIGH);
+  }
   
   // Inicializar monitor de bateria
   initBatteryMonitor();
