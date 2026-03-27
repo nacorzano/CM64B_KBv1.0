@@ -1,6 +1,7 @@
 /**
  * ================================================================
  *  Teclado Mecánico BLE HID  –  Matriz 5 × 18
+ *  Version del teclado solo con Bluetooth
  *  Layout  : Commodore-based ANSI (commodore-based-ansi.json)
  *  Hardware: ESP32 DevKitC v4  (chip ESP32, solo BLE)
  *  Framework: Arduino IDE + ESP32 Arduino Core >= 2.0.0
